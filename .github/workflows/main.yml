@@ -1,32 +1,37 @@
-name: Flask CICD
+# This is a basic workflow to help you get started with Actions
 
-env:
-  PYTHON_VERSION: '3.6.9'
-  
+name: DEPLOY TESTX TO AWS
+
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: ["main"]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-# permissions:
-#   contents: read
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
+    name: Build
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: test
-        id: just-test
-        run: 
-          echo ${{ secrets.SERVER_SSH_USERNAME }}
-
-
-      - uses: actions/checkout@v3
-      
-      - name: SSH commands using password
+      - name: executing remote ssh commands using password
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SERVER_SSH_HOST }} # 서버  ip주소
-          username: ${{ secrets.SERVER_SSH_USERNAME }} # 서버 유저이름
-          key: ${{ secrets.SERVER_SSH_KEY }} # AWS 연결 키
-          script:
-            echo "github actions cicd test" > "test_20230726.txt
+          host: ${{ secrets.SERVER_SSH_HOST }}
+          username: ${{ secrets.SERVER_SSH_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script_stop: true
+          script: |
+            whoami
+            ls -al
+            echo "run~ plz run~"
