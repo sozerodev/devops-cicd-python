@@ -23,8 +23,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Check for #hotfix keyword
+        run: |
+          if [[ ! "$(git log -1 --pretty=%B)" =~ "#hotfix" ]]; then
+            echo "Skipping the job. No #hotfix keyword found in the commit message."
+            exit 0
+          fi
+    
+      - name: test
+        run: |
+          echo "들어옴"
+          
       - name: executing remote ssh commands using password
-        if: contains(github.event.head_commit.message, '#hotfix') == false
+        #if: contains(github.event.head_commit.message, '#hotfix') == false
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         uses: appleboy/ssh-action@master
         with:
