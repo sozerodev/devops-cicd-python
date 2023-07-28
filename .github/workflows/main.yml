@@ -32,22 +32,23 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script_stop: true
           script: |
-            echo ${{ github.event.head_commit.message }} >> "test.txt"
-            echo ${{ github.event.head_commit.body }} >> "test.txt"
+            echo "${{ github.event.head_commit.message }}" >> "test.txt"
+            echo "${{ github.event.head_commit.body }}" >> "test.txt"
+            echo $commit >> test.txt
             
-      - name: executing remote ssh commands using password
-        if: contains(github.event.head_commit.message, '#hotfix') == false
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_SSH_HOST }}
-          username: ${{ secrets.SERVER_SSH_USERNAME }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script_stop: true
-          script: |
-            whoami
-            ls -al
-            echo "run~ plz run~" >> "test.txt" 
+#       - name: executing remote ssh commands using password
+#         if: contains(github.event.head_commit.message, '#hotfix') == false
+#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.SERVER_SSH_HOST }}
+#           username: ${{ secrets.SERVER_SSH_USERNAME }}
+#           key: ${{ secrets.SERVER_SSH_KEY }}
+#           script_stop: true
+#           script: |
+#             whoami
+#             ls -al
+#             echo "run~ plz run~" >> "test.txt" 
             
             
             
