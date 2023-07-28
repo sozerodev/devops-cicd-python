@@ -25,7 +25,9 @@ jobs:
     steps:
       - name: Check for #hotfix keyword
         run: |
-          if [[ ! "$(git log -1 --pretty=%B)" =~ "#hotfix" ]]; then
+          if [[ "$(git log -1 --pretty=%B)" =~ "#hotfix" ]]; then
+            echo "Found #hotfix keyword in the commit message. Proceeding with deployment..."
+          else
             echo "Skipping the job. No #hotfix keyword found in the commit message."
             exit 0
           fi
