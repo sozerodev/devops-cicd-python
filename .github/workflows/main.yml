@@ -25,10 +25,10 @@ jobs:
     steps:
       - name: Check for #hotfix keyword
         run: |
-          if [[ "$(git log -1 --pretty=%B)" =~ "#hotfix" ]]; then
-            echo "Found #hotfix keyword in the commit message. Proceeding with deployment..."
+          if [[ "${{ github.event.head_commit.message }}" =~ "#hotfix" ]] || [[ "${{ github.event.head_commit.body }}" =~ "#hotfix" ]]; then
+            echo "Found #hotfix keyword in the commit message or extended description. Proceeding with deployment..."
           else
-            echo "Skipping the job. No #hotfix keyword found in the commit message."
+            echo "Skipping the job. No #hotfix keyword found in the commit message or extended description."
             exit 0
           fi
     
