@@ -44,9 +44,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script_stop: true
           script: |
-            echo "${{github.triggering_actor}} 가 작성" >> "test.txt"
-            echo "$github.triggering_actor 가 작성" >> "test.txt:
-            echo "run~ plz run~" >> "test.txt" 
+            echo "${{github.triggering_actor}} 가 작성1" >> "test.txt"
+            echo "$github.triggering_actor 가 작성2" >> "test.txt"
             
             
 #       - name: Remove Github Actions IP From Security Group
