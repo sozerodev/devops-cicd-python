@@ -44,10 +44,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script_stop: true
           script: |
-            echo "${{github.triggering_actor}} 가 작성1" >> "test.txt"
-            echo "$github.triggering_actor 가 작성2" >> "test.txt"
-            
-            
+            cd /home/ubuntu
+            sh ./deploy.sh ${{github.triggering_actor}}>> "deploy_history.log"
 #       - name: Remove Github Actions IP From Security Group
 #         run: |
 #           aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
