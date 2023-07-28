@@ -23,22 +23,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Check for #hotfix keyword
-        run: |
-          if [[ "${{ github.event.head_commit.message }}" =~ "#hotfix" ]] || [[ "${{ github.event.head_commit.body }}" =~ "#hotfix" ]]; then
-            echo "Found #hotfix keyword in the commit message or extended description."
-            exit 0
-          else
-            echo "Skipping the job. No #hotfix keyword found in the commit message or extended description."
-            echo "Proceeding with deployment..."
-          fi
-    
-      - name: test
-        run: |
-          echo "들어옴"
           
       - name: executing remote ssh commands using password
-        #if: contains(github.event.head_commit.message, '#hotfix') == false
+        if: contains(github.event.head_commit.message, '#hotfix') == false || contains(github.event.head_commit.body, '#hotfix') == false
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
         uses: appleboy/ssh-action@master
         with:
